@@ -13,7 +13,6 @@ export class OpenFactFoodService {
   
     searchProduct(barCode) {
         var url = `https://fr.openfoodfacts.org/api/v0/produit/${encodeURI(barCode)}`;
-        console.log(`url::${url}`)
         return this.http.get(url)
           .toPromise()
           .then(res => res.json())

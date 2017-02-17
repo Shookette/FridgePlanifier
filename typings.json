@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
-    "cordova": "registry:dt/cordova#0.0.0+20160819210047"
+    "cordova": "registry:dt/cordova#0.0.0+20160819210047",
+    "moment": "registry:dt/moment#2.11.1+20161010105546"
   }
 }

@@ -5,10 +5,15 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="scan">
-    scan page
-  </div>
-  <div class="homeBack">
-    <button ion-button large color="dark" outline (click)="returnHome()">Return to home page</button>
-  </div>
+  <form (ngSubmit)="insertProduct()" *ngIf="!codeBar">
+      <ion-item>
+        <ion-label>Product Name</ion-label>
+        <ion-input type="text" [(ngModel)]="formData.productName" name="productName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Expiration Date</ion-label>
+        <ion-textarea [(ngModel)]="formData.expirationDate" name="expirationDate"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" block>Add New Product</button>
+    </form>
 </ion-content>
