@@ -12,8 +12,12 @@
       </ion-item>
       <ion-item>
         <ion-label>Expiration Date</ion-label>
-        <ion-textarea [(ngModel)]="formData.expirationDate" name="expirationDate"></ion-textarea>
+        <!--@todo-->
+        <ion-input type="date" [(ngModel)]="formData.expirationDate" name="expirationDate" min="minDate"></ion-input>
       </ion-item>
       <button ion-button type="submit" block>Add New Product</button>
     </form>
+    <div>
+      <button ion-button (click)="returnHome()" block>Return to list</button>
+    </div>
 </ion-content>

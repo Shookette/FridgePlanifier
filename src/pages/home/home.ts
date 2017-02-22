@@ -3,18 +3,50 @@ import { BarcodeScanner } from 'ionic-native';
 
 import { NavController, Platform, AlertController } from 'ionic-angular';
 import { ScanProduct } from '../scanProduct/scanProduct';
+import { ProductService } from '../../shared/services/productService';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [ProductService]
 })
 export class HomePage {
+  public products: Array<Object> = [];
+  protected minDate: any;
 
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private productServ: ProductService
   ) {
+    // @todo use directly products array in productServ and don't do a copy
+    this.products = productServ.products;
+    this.minDate = moment().format("YYYY-MM-D");
+    // @todo remove this test or only in desktop mod
+    this.products = [
+      {
+        id: 1,
+        name: 'toto',
+        expirationDate: '2010-10-10'
+      },
+      {
+        id: 2,
+        name: 'toto',
+        expirationDate: '2010-10-10'
+      },
+      {
+        id: 3,
+        name: 'toto',
+        expirationDate: '2010-10-10'
+      },
+      {
+        id: 4,
+        name: 'toto',
+        expirationDate: '2010-10-10'
+      }
+    ];
   }
 
   protected scanProduct() {
@@ -31,6 +63,14 @@ export class HomePage {
         this.navCtrl.setRoot(ScanProduct);
       });
     });
+  }
+
+  protected addProduct() {
+    this.navCtrl.setRoot(ScanProduct);
+  }
+
+  protected removeProduct(id) {
+    this.productServ.deleteProduct(id);
   }
 
 }

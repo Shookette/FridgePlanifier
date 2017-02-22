@@ -1,23 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Fridge Planifier</ion-title>
+    <ion-title>
+      <div class="item-inner">
+        Fridge Planifier
+        <ion-icon ios="ios-camera" md="md-camera" (click)="scanProduct()"></ion-icon>
+        <ion-icon ios="ios-add" md="md-add" (click)="addProduct()"></ion-icon>
+      </div>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div class="alreadyExpired">
-    List of all already expired products
-  </div>
-  <div class="expireToday">
-    List of all product who expire today
-  </div>
-  <div class="expireTomorrow">
-    List of all product who expire tomorrow
-  </div>
-  <div class="expireLater">
-    List of all product who expire later in month
-  </div>
-  <div class="scanProduct">
-    <button ion-button large color="dark" outline (click)="scanProduct()">Scan your product</button>
-  </div>
+  <ion-list>
+    <ion-item *ngFor="let product of products" class="item item-block">
+      {{ product.name }} - {{ product.expirationDate}}
+      <div class="right">
+        <ion-icon ios="ios-trash" md="md-trash" (click)="removeProduct(product.id)"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
