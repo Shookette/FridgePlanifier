@@ -2,9 +2,15 @@
   <ion-navbar>
     <ion-title>
       <div class="item-inner">
-        Fridge Planifier
-        <ion-icon ios="ios-camera" md="md-camera" (click)="scanProduct()"></ion-icon>
-        <ion-icon ios="ios-add" md="md-add" (click)="addProduct()"></ion-icon>
+        <div class="itemClass">
+          <div>
+            <span>Fridge Planifier</span>
+          </div>
+          <div>
+            <ion-icon ios="ios-camera" md="md-camera" (click)="scanProduct()"></ion-icon>
+            <ion-icon ios="ios-add" md="md-add" (click)="addProduct()"></ion-icon>
+          </div>
+        </div>
       </div>
     </ion-title>
   </ion-navbar>
@@ -13,9 +19,13 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let product of products" class="item item-block">
-      {{ product.name }} - {{ product.expirationDate}}
-      <div class="right">
-        <ion-icon ios="ios-trash" md="md-trash" (click)="removeProduct(product.id)"></ion-icon>
+      <div class="itemClass">
+        <div>
+          <span>{{ product.name }} - {{ remainingTime(product.expirationDate)}}</span>
+        </div>
+        <div>
+          <ion-icon ios="ios-trash" md="md-trash" (click)="removeProduct(product.id)"></ion-icon>
+        </div>
       </div>
     </ion-item>
   </ion-list>

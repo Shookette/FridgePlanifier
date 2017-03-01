@@ -29,22 +29,22 @@ export class HomePage {
       {
         id: 1,
         name: 'toto',
-        expirationDate: '2010-10-10'
+        expirationDate: '2017-10-03'
       },
       {
         id: 2,
         name: 'toto',
-        expirationDate: '2010-10-10'
+        expirationDate: '2017-10-03'
       },
       {
         id: 3,
         name: 'toto',
-        expirationDate: '2010-10-10'
+        expirationDate: '2017-10-03'
       },
       {
         id: 4,
         name: 'toto',
-        expirationDate: '2010-10-10'
+        expirationDate: '2017-10-03'
       }
     ];
   }
@@ -71,6 +71,10 @@ export class HomePage {
 
   protected removeProduct(id) {
     this.productServ.deleteProduct(id);
+  }
+
+  protected remainingTime(date) {
+    return moment(moment(date).diff(moment())).format('D');
   }
 
 }
