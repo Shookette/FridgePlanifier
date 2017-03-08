@@ -27,6 +27,13 @@ export class ProductService {
     });
   }
 
+  /**
+   * 
+   * 
+   * @param {*} product 
+   * 
+   * @memberOf ProductService
+   */
   public insertProduct(product: any): void {
     this.db.executeSql("INSERT INTO product (name, expirationDate) VALUES (?, ?)", [product.name, product.expirationDate]).then((data) => {
       let newProduct = {
@@ -41,14 +48,29 @@ export class ProductService {
     });
   }
 
-  public deleteProduct(product: any): void {
-    this.db.executeSql("DELETE FROM product where id = ?", [product.id]).then(() => {
-      // TODO array.slice (pop product from products array)
+  /**
+   * 
+   * 
+   * @param {*} product 
+   * 
+   * @memberOf ProductService
+   */
+  public deleteProduct(id: Number): void {
+    this.db.executeSql("DELETE FROM product where id = ?", [id]).then(() => {
+      this.products = this.products.filter(function (el) {
+        return el['id'] !== id;
+      });
     }).catch((error) => {
       console.error("ERROR: ", error);
     });
   }
 
+  /**
+   * 
+   * 
+   * 
+   * @memberOf ProductService
+   */
   public refresh(): void {
     this.db.executeSql("SELECT * FROM product ORDER BY expirationDate ASC", []).then((data) => {
       console.log("DATA BEFORE RENDERING::", data);
@@ -67,6 +89,15 @@ export class ProductService {
     });
   }
 
+  /**
+   * Return remainingTime from date argument 
+   * 
+   * @protected
+   * @param {string} date 
+   * @returns {string} 
+   * 
+   * @memberOf ProductService
+   */
   protected remainingTime(date: string): string {
     let diff = moment(moment(date).diff(moment()));
     let remainingTime;

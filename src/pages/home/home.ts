@@ -21,35 +21,10 @@ export class HomePage {
     private alertCtrl: AlertController,
     private productServ: ProductService
   ) {
-    // @todo use directly products array in productServ and don't do a copy
-    this.products = productServ.products;
     this.minDate = moment().format("YYYY-MM-D");
-    // @todo remove this test or only in desktop mod
-    this.products = [
-      {
-        id: 1,
-        name: 'toto',
-        expirationDate: '2017-10-03'
-      },
-      {
-        id: 2,
-        name: 'toto',
-        expirationDate: '2017-10-03'
-      },
-      {
-        id: 3,
-        name: 'toto',
-        expirationDate: '2017-10-03'
-      },
-      {
-        id: 4,
-        name: 'toto',
-        expirationDate: '2017-10-03'
-      }
-    ];
   }
 
-  protected scanProduct() {
+  protected scanProduct(): void {
     // Todo when scanning is OK then redirect on scanProduct with params if set without else
     // If param is set, then do a WGET request else add product manually 
     // Add product to database latter ?
@@ -65,16 +40,11 @@ export class HomePage {
     });
   }
 
-  protected addProduct() {
+  protected addProduct(): void {
     this.navCtrl.setRoot(ScanProduct);
   }
 
-  protected removeProduct(id) {
+  protected removeProduct(id: Number): void {
     this.productServ.deleteProduct(id);
   }
-
-  protected remainingTime(date) {
-    return moment(moment(date).diff(moment())).format('D');
-  }
-
 }
