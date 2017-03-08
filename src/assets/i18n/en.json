@@ -1,4 +1,15 @@
 {
   "newProduct": "New product",
-  "homePage": "List of product"
+  "homePage": "List of product",
+  "title": "Fridge Planifier",
+  "product": {
+    "name": "Product name",
+    "expiration": "Expiration date"
+  },
+  "peremption": {
+    "twoweek": "Eat within 2 weeks or more",
+    "oneweek": "Eat within {{nbday}} day(s)",
+    "today": "Eat today or never",
+    "already": "Don't eat, it's too late"
+  }
 }

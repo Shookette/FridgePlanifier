@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SQLite } from 'ionic-native';
 import { Platform } from 'ionic-angular';
 import * as moment from 'moment';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
     providers: []
@@ -10,7 +11,8 @@ export class ProductService {
   public products: Array<Object> = [];
   private db: SQLite;
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    private translate: TranslateService
   ) {
     this.platform.ready().then(() => {
         this.db = new SQLite();
@@ -67,17 +69,27 @@ export class ProductService {
 
   protected remainingTime(date: string): string {
     let diff = moment(moment(date).diff(moment()));
+    let remainingTime;
     if (parseInt(diff.format('D')) >= 14) {
-      return "Perimé dans plus de 2 semaines";
+      this.translate.get('peremption.twoweek').subscribe((res: string) => {
+        remainingTime = res;
+      });
     } else if (parseInt(diff.format('D')) > 1) {
-      return `Perimé dans ${diff.format('D')} jour(s)`;
+      this.translate.get('peremption.oneweek', {nbday: diff.format('D')}).subscribe((res: string) => {
+        remainingTime = res;
+      });
     } else {
       if (parseInt(diff.format('H')) >= 0) {
-        return `Perimé aujourd'hui`;
+        this.translate.get('peremption.today').subscribe((res: string) => {
+          remainingTime = res;
+        });
       } else {
-        return 'Perimé';
+        this.translate.get('peremption.already').subscribe((res: string) => {
+          remainingTime = res;
+        });
       }
     }
+    return remainingTime;
   }
 
 }
