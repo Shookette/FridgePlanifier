@@ -2,18 +2,29 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen, SQLite } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   rootPage: any = HomePage;
+  
 
-  constructor(public platform: Platform) {
+  constructor(
+    public platform: Platform,
+    public translate: TranslateService
+  ) {
     this.initializeApp();
   }
 
   initializeApp() {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    this.translate.setDefaultLang('fr');
+
+      // the lang to use, if the lang isn't available, it will use the current loader to get them
+    this.translate.use('fr');
+
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

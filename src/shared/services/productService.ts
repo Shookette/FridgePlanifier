@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SQLite } from 'ionic-native';
 import { Platform } from 'ionic-angular';
+import * as moment from 'moment';
 
 @Component({
     providers: []
@@ -22,30 +23,6 @@ export class ProductService {
             console.error("ERROR: ", error);
         });
     });
-  }
-
-  // Todo replance Array<any> by Array<product> and do proper types
-  public getProductDay(): Array<any> {
-    return;
-  }
-
-  // Todo replance Array<any> by Array<product> and do proper types
-  public getProductTomorrow(): Array<any> {
-    return;
-  }
-
-  // Todo replance Array<any> by Array<product> and do proper types
-  public getProductWeek(): Array<any> {
-    return;
-  }
-
-  // Todo replance Array<any> by Array<product> and do proper types
-  public getProductLater(): Array<any> {
-    return;
-  }
-
-  public getExpiredProduct(): Array<any> {
-    return;
   }
 
   public insertProduct(product: any): void {
@@ -70,7 +47,7 @@ export class ProductService {
     });
   }
 
-  public refresh() {
+  public refresh(): void {
     this.db.executeSql("SELECT * FROM product ORDER BY expirationDate ASC", []).then((data) => {
       console.log("DATA BEFORE RENDERING::", data);
       if(data.rows.length > 0 && this.products !== []) {
@@ -86,6 +63,21 @@ export class ProductService {
     }, (error) => {
       console.error("ERROR: " , error);
     });
+  }
+
+  protected remainingTime(date: string): string {
+    let diff = moment(moment(date).diff(moment()));
+    if (parseInt(diff.format('D')) >= 14) {
+      return "Perimé dans plus de 2 semaines";
+    } else if (parseInt(diff.format('D')) > 1) {
+      return `Perimé dans ${diff.format('D')} jour(s)`;
+    } else {
+      if (parseInt(diff.format('H')) >= 0) {
+        return `Perimé aujourd'hui`;
+      } else {
+        return 'Perimé';
+      }
+    }
   }
 
 }

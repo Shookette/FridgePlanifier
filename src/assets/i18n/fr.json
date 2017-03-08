@@ -1,0 +1,9 @@
+{
+  "newProduct": "Nouveau produit",
+  "homePage": "Liste des produits",
+  "title": "Fridge Planifier",
+  "product": {
+    "name": "Nom du produit",
+    "expiration": "Date d'éxpiration"
+  }
+}
