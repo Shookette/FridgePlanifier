@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { SQLite } from 'ionic-native';
 import { Platform } from 'ionic-angular';
 import * as moment from 'moment';
-import {TranslateService} from 'ng2-translate';
+import { TranslateService } from 'ng2-translate';
+import { LocalNotifications } from 'ionic-native';
 
 @Component({
-    providers: []
+    providers: [TranslateService, LocalNotifications]
 })
 export class ProductService {  
   public products: Array<Object> = [];
@@ -42,6 +43,7 @@ export class ProductService {
         expirationDate: product.expirationDate
       }
       this.products.push(newProduct);
+      this.addNotification(newProduct);
       console.debug("INSERTED: " , newProduct);
     }).catch((error) => {
       console.error("ERROR: " , error.err);
@@ -60,6 +62,7 @@ export class ProductService {
       this.products = this.products.filter(function (el) {
         return el['id'] !== id;
       });
+      this.clearNotification(id);
     }).catch((error) => {
       console.error("ERROR: ", error);
     });
@@ -121,6 +124,31 @@ export class ProductService {
       }
     }
     return remainingTime;
+  }
+
+  addNotification(product: any): void {
+    // let notifDate  = "";
+    // product.expirationDate - 3;
+    let notifText = this.remainingTime(product.expirationDate);
+
+    LocalNotifications.schedule({
+      id: product.id,
+      text: notifText,
+      at: new Date(new Date().getTime() + 60),
+      led: 'FF0000',
+      sound: null
+    });
+  }
+
+  reportNotification(id: number): void {
+    LocalNotifications.update({
+      id: id,
+      at: new Date(new Date().getTime() + 60)
+    });
+  }
+
+  clearNotification(id: any): void {
+    LocalNotifications.clear(id);
   }
 
 }
